@@ -1,0 +1,2 @@
+// Placeholder for apps/backend-core/src/admin/analytics/analytics.module.ts
+export {};
