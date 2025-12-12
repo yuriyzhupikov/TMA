@@ -5,6 +5,7 @@
   "compilerOptions": {
     "builder": "swc",
     "tsConfigPath": "tsconfig.build.json",
+    "outDir": "../../dist/backend-core",
     "deleteOutDir": true,
     "swcOptions": {
       "sourceMaps": true,

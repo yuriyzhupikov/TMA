@@ -4,7 +4,7 @@
   "private": true,
   "description": "CLI for Telegram bot management",
   "scripts": {
-    "build": "nest build --path nest-cli.json",
+    "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.build.json --noEmit"
   },
   "dependencies": {

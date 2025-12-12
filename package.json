@@ -26,7 +26,7 @@
     "dev:worker-jobs": "pnpm --filter @tma/worker-jobs start:dev",
     "dev:backend-all": "pnpm -r --filter @tma/backend-core --filter @tma/worker-jobs start:dev",
     "start:backend-all": "pnpm -r --filter @tma/backend-core --filter @tma/worker-jobs start",
-    "clean": "pnpm -r exec -- rm -rf dist",
+    "clean": "rm -rf dist",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
