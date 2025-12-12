@@ -1,7 +1,11 @@
 # compiled output
 /dist
+/**/dist
 /node_modules
+/**/node_modules
 /build
+/package-lock.json
+/yarn.lock
 
 # Logs
 logs
