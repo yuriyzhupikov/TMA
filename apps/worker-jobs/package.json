@@ -4,7 +4,10 @@
   "private": true,
   "description": "Worker service for background jobs",
   "scripts": {
-    "build": "nest build --path apps/worker-jobs/nest-cli.json"
+    "build": "nest build --path nest-cli.json",
+    "start": "node ../../dist/worker-jobs/main.js",
+    "start:dev": "nest start --watch --path nest-cli.json",
+    "typecheck": "tsc -p tsconfig.build.json --noEmit"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

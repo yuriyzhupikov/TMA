@@ -1,9 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.build.json",
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "../../dist/worker-jobs"
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["**/*.spec.ts", "node_modules"]
+  "exclude": ["**/*.(spec|test).ts", "node_modules", "dist"]
 }
