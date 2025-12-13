@@ -5,6 +5,7 @@ import { Pool } from 'pg';
 import { DatabaseSchema } from './database.types';
 import { PG_CLIENT } from '../configuretion/constants';
 import { pgConfig } from '../configuretion/config';
+import { MigrationRunner } from './migrations/migration-runner.service';
 
 @Global()
 @Module({
@@ -17,11 +18,17 @@ import { pgConfig } from '../configuretion/config';
         new Kysely<DatabaseSchema>({
           dialect: new PostgresDialect({
             pool: new Pool({
-              ...pgConfig_,
+              host: pgConfig_.host,
+              port: pgConfig_.port,
+              user: pgConfig_.user,
+              password: pgConfig_.password,
+              database: pgConfig_.database,
+              max: pgConfig_.max,
             }),
           }),
         }),
     },
+    MigrationRunner,
   ],
   exports: [PG_CLIENT],
 })

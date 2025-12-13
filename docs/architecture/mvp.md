@@ -25,7 +25,7 @@
 │  │     │  │  ├─ index.tsx              # список TMA-проектов для выбранного тенанта
 │  │     │  │  └─ [projectId].tsx        # карточка проекта, быстрые действия, ссылки
 │  │     │  │
-│  │     │  ├─ configs/
+│  │     │  ├─ configuration/
 │  │     │  │  ├─ index.tsx              # список конфигов/проектов с их состоянием
 │  │     │  │  └─ [projectId].tsx        # страница конструктора конфига выбранного проекта
 │  │     │  │
@@ -73,7 +73,7 @@
 │  │     │  │
 │  │     │  └─ types.ts                  # типы Project, ProjectStatus для фронта
 │  │     │
-│  │     ├─ configs/                     # UI и логика редактора конфигов TMA
+│  │     ├─ configuration/                     # UI и логика редактора конфигов TMA
 │  │     │  ├─ api/
 │  │     │  │  └─ configs.api.ts         # HTTP к /admin/configs, /admin/projects/:id/config
 │  │     │  │
@@ -237,7 +237,7 @@
 │  │     │  │     ├─ create-project.dto.ts # DTO создания проекта
 │  │     │  │     └─ update-project.dto.ts # DTO обновления проекта
 │  │     │  │
-│  │     │  ├─ configs/                  # управление конфигами игр
+│  │     │  ├─ configuration/                  # управление конфигами игр
 │  │     │  │  ├─ configs.controller.ts  # эндпоинты /admin/configs/*
 │  │     │  │  ├─ configs.service.ts     # CRUD и публикация конфигов
 │  │     │  │  ├─ configs.module.ts      # Nest-модуль конфигов
@@ -393,8 +393,7 @@
 │        │  ├─ telegram-api.client.ts   # вызовы setWebhook, getWebhookInfo, sendMessage
 │        │  └─ telegram-api.types.ts    # TS-типы ответов Bot API
 │        │
-│        └─ config/                     # конфигурация CLI
-│           ├─ env.ts                   # чтение BOT_TOKEN и прочих переменных окружения
+│        └─ configuration/              # конфигурация CLI             
 │           └─ cli-config.ts            # дефолтные значения (например, дефолтный webhook URL)
 │
 └─ docs
