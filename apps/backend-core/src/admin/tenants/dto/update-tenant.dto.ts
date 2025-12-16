@@ -1,2 +1,11 @@
-// Placeholder for apps/backend-core/src/admin/tenants/dto/update-tenant.dto.ts
-export {};
+import { IsOptional, IsString } from 'class-validator';
+
+export class UpdateTenantDto {
+  @IsString()
+  @IsOptional()
+  slug?: string;
+
+  @IsString()
+  @IsOptional()
+  name?: string;
+}

@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { applyClickRule } from './rules/click-rule';
 import {
-  ClickerConfig,
   PlayerProgressState,
   RuntimeConfig,
   RuntimeEventPayload,
@@ -16,10 +15,9 @@ export class GameService {
     event: RuntimeEventPayload,
   ): RuntimeEventResult {
     if (event.eventType === 'CLICK') {
-      const clickerConfig = config as ClickerConfig;
-      return applyClickRule(progress, clickerConfig);
+      return applyClickRule(progress, config);
     }
 
-    throw new BadRequestException(`Unsupported event type: ${event.eventType}`);
+    throw new BadRequestException('Unsupported event type');
   }
 }

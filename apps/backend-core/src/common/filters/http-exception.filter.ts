@@ -25,14 +25,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
       ? exception.getResponse()
       : { message: 'Internal server error' };
 
-    const message =
-      typeof errorResponse === 'string'
-        ? errorResponse
-        : (errorResponse as any).message || 'Unexpected error';
     const details =
       typeof errorResponse === 'object' && errorResponse !== null
         ? (errorResponse as Record<string, unknown>)
         : undefined;
+    const message =
+      typeof errorResponse === 'string'
+        ? errorResponse
+        : this.extractMessage(details);
 
     if (!isHttpException) {
       this.logger.error(
@@ -47,5 +47,19 @@ export class HttpExceptionFilter implements ExceptionFilter {
       message,
       ...(details && { details }),
     });
+  }
+
+  private extractMessage(
+    response: Record<string, unknown> | undefined,
+  ): string {
+    if (
+      response &&
+      'message' in response &&
+      typeof response.message === 'string'
+    ) {
+      return response.message;
+    }
+
+    return 'Unexpected error';
   }
 }

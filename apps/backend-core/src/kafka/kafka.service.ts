@@ -8,7 +8,8 @@ export class KafkaService implements OnModuleDestroy {
   private readonly enabled: boolean;
 
   constructor(
-    @Inject(kafkaConfig.KEY) private readonly config: ConfigType<typeof kafkaConfig>,
+    @Inject(kafkaConfig.KEY)
+    private readonly config: ConfigType<typeof kafkaConfig>,
   ) {
     this.enabled = Array.isArray(config.brokers) && config.brokers.length > 0;
   }
@@ -25,6 +26,8 @@ export class KafkaService implements OnModuleDestroy {
     this.logger.log(
       `Kafka emit ${topic} -> ${JSON.stringify(message)} (brokers: ${this.config.brokers.join(',')})`,
     );
+
+    await Promise.resolve();
   }
 
   async onModuleDestroy(): Promise<void> {

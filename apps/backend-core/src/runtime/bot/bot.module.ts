@@ -1,2 +1,9 @@
-// Placeholder for apps/backend-core/src/runtime/bot/bot.module.ts
-export {};
+import { Module } from '@nestjs/common';
+import { BotController } from './bot.controller';
+import { BotService } from './bot.service';
+
+@Module({
+  controllers: [BotController],
+  providers: [BotService],
+})
+export class BotModule {}

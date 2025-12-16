@@ -19,9 +19,12 @@ export interface RuntimeAnalyticsEventRecord {
 export class RuntimeAnalyticsRepository {
   constructor(@Inject(PG_CLIENT) private readonly db: DbClient) {}
 
-  async insertEvent(
-    event: RuntimeAnalyticsEventRecord,
-  ): Promise<void> {
+  async insertEvent(event: RuntimeAnalyticsEventRecord): Promise<void> {
+    const deltaJson: Record<string, number> = {
+      balanceDelta: event.delta.balanceDelta,
+      levelDelta: event.delta.levelDelta,
+    };
+
     await this.db
       .insertInto('event_log')
       .values({
@@ -30,7 +33,7 @@ export class RuntimeAnalyticsRepository {
         player_id: event.playerId,
         type: event.type,
         payload_json: event.payload,
-        delta_json: event.delta,
+        delta_json: deltaJson,
         ts: sql`now()`,
       })
       .execute();

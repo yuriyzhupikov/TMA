@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 
 type AppValidationMetatype = {
-  validate?: (value: any) => void;
-  sanitize?: (value: any) => any;
+  validate?: (value: unknown) => void;
+  sanitize?: (value: unknown) => unknown;
   allowedProps?: string[];
 };
 
@@ -25,7 +25,7 @@ export class AppValidationPipe implements PipeTransform {
     },
   ) {}
 
-  transform(value: any, metadata: ArgumentMetadata): any {
+  transform(value: unknown, metadata: ArgumentMetadata): unknown {
     const { metatype, type } = metadata;
     if (!metatype || this.isPrimitive(metatype) || type === 'custom') {
       return value;
@@ -48,12 +48,11 @@ export class AppValidationPipe implements PipeTransform {
     return transformed;
   }
 
-  private applyWhitelist(value: any, meta: AppValidationMetatype): any {
+  private applyWhitelist(value: unknown, meta: AppValidationMetatype): unknown {
     if (
       !this.options.whitelist ||
       !meta.allowedProps ||
-      typeof value !== 'object' ||
-      value === null
+      !this.isRecord(value)
     ) {
       return value;
     }
@@ -69,7 +68,7 @@ export class AppValidationPipe implements PipeTransform {
     );
   }
 
-  private applyTransform(value: any, meta: AppValidationMetatype): any {
+  private applyTransform(value: unknown, meta: AppValidationMetatype): unknown {
     if (!this.options.transform) {
       return value;
     }
@@ -82,8 +81,16 @@ export class AppValidationPipe implements PipeTransform {
   }
 
   private isPrimitive(metatype: unknown): boolean {
-    return [String, Boolean, Number, Array, Object].includes(
-      metatype as any,
+    return (
+      metatype === String ||
+      metatype === Boolean ||
+      metatype === Number ||
+      metatype === Array ||
+      metatype === Object
     );
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
   }
 }

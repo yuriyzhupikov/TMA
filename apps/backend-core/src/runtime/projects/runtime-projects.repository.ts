@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Kysely, Selectable } from 'kysely';
 import { PG_CLIENT } from '../../configuretion/constants';
-import { DatabaseSchema, ProjectConfigTable, ProjectTable } from '../../postgres/database.types';
+import {
+  DatabaseSchema,
+  ProjectConfigTable,
+  ProjectTable,
+} from '../../postgres/database.types';
 
 type DbClient = Kysely<DatabaseSchema>;
 
@@ -11,7 +15,12 @@ export class RuntimeProjectsRepository {
 
   async findActiveProjectBySlug(
     slug: string,
-  ): Promise<Selectable<Pick<ProjectTable, 'id' | 'company_id' | 'slug' | 'name' | 'game_type' | 'status'>> | null> {
+  ): Promise<Selectable<
+    Pick<
+      ProjectTable,
+      'id' | 'company_id' | 'slug' | 'name' | 'game_type' | 'status'
+    >
+  > | null> {
     const project = await this.db
       .selectFrom('project')
       .select(['id', 'company_id', 'slug', 'name', 'game_type', 'status'])
@@ -24,7 +33,12 @@ export class RuntimeProjectsRepository {
 
   async findActiveProjectById(
     id: string,
-  ): Promise<Selectable<Pick<ProjectTable, 'id' | 'company_id' | 'slug' | 'name' | 'game_type' | 'status'>> | null> {
+  ): Promise<Selectable<
+    Pick<
+      ProjectTable,
+      'id' | 'company_id' | 'slug' | 'name' | 'game_type' | 'status'
+    >
+  > | null> {
     const project = await this.db
       .selectFrom('project')
       .select(['id', 'company_id', 'slug', 'name', 'game_type', 'status'])
@@ -37,7 +51,9 @@ export class RuntimeProjectsRepository {
 
   async findLatestPublishedConfig(
     projectId: string,
-  ): Promise<Selectable<Pick<ProjectConfigTable, 'config_json' | 'version'>> | null> {
+  ): Promise<Selectable<
+    Pick<ProjectConfigTable, 'config_json' | 'version'>
+  > | null> {
     const config = await this.db
       .selectFrom('project_config')
       .select(['config_json', 'version'])

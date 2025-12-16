@@ -14,6 +14,8 @@ import { MetricsModule } from './metrics/metrics.module';
 import { FlagsModule } from './flags/flags.module';
 import { KafkaModule } from './kafka/kafka.module';
 import { PrometheusModule } from './prometheus/prometheus.module';
+import { AdminModule } from './admin/admin.module';
+import { BotModule } from './runtime/bot/bot.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { PrometheusModule } from './prometheus/prometheus.module';
     FlagsModule,
     KafkaModule,
     RuntimeModule,
+    BotModule,
+    AdminModule,
   ],
 })
 export class AppModule {}

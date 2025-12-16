@@ -1,11 +1,10 @@
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { sql } from 'kysely';
+import { Kysely, RawBuilder, sql } from 'kysely';
 import * as fs from 'fs';
 import * as path from 'path';
 import { DatabaseSchema } from '../database.types';
 import { PG_CLIENT } from '../../configuretion/constants';
-import { Kysely } from 'kysely';
 
 @Injectable()
 export class MigrationRunner implements OnModuleInit {
@@ -47,7 +46,11 @@ export class MigrationRunner implements OnModuleInit {
       .filter((file) => file.endsWith('.sql'))
       .sort();
 
-    if (!files.length && migrationsDir !== sourceDir && fs.existsSync(sourceDir)) {
+    if (
+      !files.length &&
+      migrationsDir !== sourceDir &&
+      fs.existsSync(sourceDir)
+    ) {
       directoryUsed = sourceDir;
       files = fs
         .readdirSync(sourceDir)
@@ -63,7 +66,8 @@ export class MigrationRunner implements OnModuleInit {
     for (const file of files) {
       const sqlText = fs.readFileSync(path.join(directoryUsed, file), 'utf-8');
       this.logger.log(`Applying migration ${file}`);
-      await this.db.execute(sql.raw(sqlText));
+      const rawQuery: RawBuilder<unknown> = sql.raw(sqlText);
+      await rawQuery.execute(this.db);
     }
   }
 }

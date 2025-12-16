@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Kysely, Selectable, sql } from 'kysely';
 import { PG_CLIENT } from '../../configuretion/constants';
-import { DatabaseSchema, PlayerProgressTable, PlayerTable } from '../../postgres/database.types';
+import {
+  DatabaseSchema,
+  PlayerProgressTable,
+  PlayerTable,
+} from '../../postgres/database.types';
 
 type DbClient = Kysely<DatabaseSchema>;
 

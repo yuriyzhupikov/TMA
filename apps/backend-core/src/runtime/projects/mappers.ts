@@ -26,8 +26,7 @@ export function mapProjectWithConfig(
   >,
   config: Pick<Selectable<ProjectConfigTable>, 'config_json' | 'version'>,
 ): RuntimeProjectWithConfig {
-  const runtimeConfig = (config.config_json ??
-    {}) as unknown as RuntimeConfig;
+  const runtimeConfig = (config.config_json ?? {}) as unknown as RuntimeConfig;
 
   return {
     id: project.id,

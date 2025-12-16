@@ -20,7 +20,8 @@ export class RuntimeProjectsService {
 
   async findBySlug(slug: string): Promise<RuntimeProjectWithConfig> {
     const cacheKey = `runtime:project:slug:${slug}`;
-    const cached = await this.redisService.get<RuntimeProjectWithConfig>(cacheKey);
+    const cached =
+      await this.redisService.get<RuntimeProjectWithConfig>(cacheKey);
     if (cached) {
       return cached;
     }
@@ -45,7 +46,8 @@ export class RuntimeProjectsService {
 
   async findById(id: string): Promise<RuntimeProjectWithConfig> {
     const cacheKey = `runtime:project:id:${id}`;
-    const cached = await this.redisService.get<RuntimeProjectWithConfig>(cacheKey);
+    const cached =
+      await this.redisService.get<RuntimeProjectWithConfig>(cacheKey);
     if (cached) {
       return cached;
     }
