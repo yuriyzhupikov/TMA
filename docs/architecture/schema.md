@@ -315,7 +315,7 @@
 │  │     │
 │  │     ├─ kafka/                       # обвязка над libs/kafka
 │  │     │  ├─ kafka.module.ts           # импорт KafkaModule, настройка продьюсеров
-│  │     │  └─ kafka-topics.ts           # константы Kafka-топиков (tma.events.analytics, ...)
+│  │     │  └─ kafka-topics.ts           # список подключаемых топиков (импортируются из доменов через их public API; сами доменные топики объявляются в доменах)
 │  │     │
 │  │     └─ common/                      # utility-слой Nest: guards, interceptors, filters
 │  │        ├─ guards/
@@ -335,8 +335,8 @@
 │  │        │  └─ tenant.decorator.ts            # получение текущего тенанта
 │  │        │
 │  │        └─ utils/
-│  │           ├─ pagination.util.ts     # хелперы для пагинации
-│  │           └─ tracing.util.ts        # хелперы для трейсинга/логов
+│  │           ├─ pagination.util.ts     # хелперы для пагинации (кросс-сервисные, без доменной логики)
+│  │           └─ tracing.util.ts        # хелперы для трейсинга/логов (кросс-сервисные, без доменной логики)
 │  │
 │  ├─ worker-jobs/                      # сервис асинхронной обработки событий (Kafka-воркер)
 │  │  ├─ package.json                   # зависимости воркера
