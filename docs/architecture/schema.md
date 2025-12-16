@@ -1,4 +1,4 @@
-.
+```
 ├─ package.json                       # корневые зависимости монорепы, скрипты
 ├─ pnpm-workspace.yaml                # описание workspace-пакетов (apps/, libs/)
 ├─ tsconfig.base.json                 # базовый TS-конфиг для всех пакетов
@@ -202,10 +202,10 @@
 │  │  ├─ package.json                    # скрипты сборки и запуска backend-core
 │  │  └─ src/
 │  │     ├─ main.ts                      # вход в Nest-приложение, создание AppModule
-│  │     ├─ app.ts                       # AppModule: собирает admin, runtime, infra-модули
+│  │     ├─ app.module.ts                # AppModule: собирает admin, runtime, infra-модули
 │  │     │
-│  │     ├─ admin/                       # зона /admin/* (SaaS панель и API)
-│  │     │  ├─ auth/                     # авторизация админки
+│  │     ├─ admin/                       # домен admin - зона /admin/* (SaaS панель и API)
+│  │     │  ├─ auth/                     # поддомен auth - авторизация админки
 │  │     │  │  ├─ auth.controller.ts     # эндпоинты /admin/auth/*
 │  │     │  │  ├─ auth.service.ts        # логика логина, проверки пользователя
 │  │     │  │  ├─ auth.module.ts         # Nest-модуль авторизации
@@ -213,36 +213,36 @@
 │  │     │  │     ├─ login.dto.ts        # DTO входа по логину/паролю/коду
 │  │     │  │     └─ me.dto.ts           # DTO ответа для /me
 │  │     │  │
-│  │     │  ├─ users/                    # управление пользователями SaaS
-│  │     │  │  ├─ users.controller.ts    # эндпоинты /admin/users/*
-│  │     │  │  ├─ users.service.ts       # CRUD пользователей
-│  │     │  │  ├─ users.module.ts        # Nest-модуль пользователей
+│  │     │  ├─ user/                     # поддомен user - управление пользователями SaaS
+│  │     │  │  ├─ user.controller.ts    # эндпоинты /admin/users/*
+│  │     │  │  ├─ user.service.ts       # CRUD пользователей
+│  │     │  │  ├─ user.module.ts        # Nest-модуль пользователей
 │  │     │  │  └─ dto/
 │  │     │  │     ├─ create-user.dto.ts  # DTO создания пользователя
 │  │     │  │     └─ update-user.dto.ts  # DTO обновления пользователя
 │  │     │  │
-│  │     │  ├─ tenants/                  # управление компаниями/тенантами
-│  │     │  │  ├─ tenants.controller.ts  # эндпоинты /admin/tenants/*
-│  │     │  │  ├─ tenants.service.ts     # логика создания/обновления тенантов
-│  │     │  │  ├─ tenants.module.ts      # Nest-модуль тенантов
+│  │     │  ├─ tenant/                  # поддомен tenant - управление компаниями/тенантами
+│  │     │  │  ├─ tenant.controller.ts  # эндпоинты /admin/tenants/*
+│  │     │  │  ├─ tenant.service.ts     # логика создания/обновления тенантов
+│  │     │  │  ├─ tenant.module.ts      # Nest-модуль тенантов
 │  │     │  │  └─ dto/
 │  │     │  │     ├─ create-tenant.dto.ts# DTO создания тенанта
 │  │     │  │     └─ update-tenant.dto.ts# DTO обновления тенанта
 │  │     │  │
-│  │     │  ├─ projects/                 # управление TMA-проектами
-│  │     │  │  ├─ projects.controller.ts # эндпоинты /admin/projects/*
-│  │     │  │  ├─ projects.service.ts    # логика CRUD проектов
-│  │     │  │  ├─ projects.module.ts     # Nest-модуль проектов
+│  │     │  ├─ project/                 # поддомен project - управление TMA-проектами
+│  │     │  │  ├─ project.controller.ts # эндпоинты /admin/projects/*
+│  │     │  │  ├─ project.service.ts    # логика CRUD проектов
+│  │     │  │  ├─ project.module.ts     # Nest-модуль проектов
 │  │     │  │  └─ dto/
 │  │     │  │     ├─ create-project.dto.ts # DTO создания проекта
 │  │     │  │     └─ update-project.dto.ts # DTO обновления проекта
 │  │     │  │
 │  │     │  ├─ configuration/                  # управление конфигами игр
-│  │     │  │  ├─ configs.controller.ts  # эндпоинты /admin/configs/*
-│  │     │  │  ├─ configs.service.ts     # CRUD и публикация конфигов
-│  │     │  │  ├─ configs.module.ts      # Nest-модуль конфигов
+│  │     │  │  ├─ config.controller.ts  # эндпоинты /admin/configs/*
+│  │     │  │  ├─ config.service.ts     # CRUD и публикация конфигов
+│  │     │  │  ├─ config.module.ts      # Nest-модуль конфигов
 │  │     │  │  └─ dto/
-│  │     │  │     ├─ upsert-config.dto.ts# DTO сохранения/обновления конфига
+│  │     │  │     ├─ upsert-config.dto.ts  # DTO сохранения/обновления конфига
 │  │     │  │     └─ publish-config.dto.ts # DTO публикации конфига
 │  │     │  │
 │  │     │  ├─ billing/                  # лимиты, тарифы (MVP-версия может быть простым stub)
@@ -345,11 +345,13 @@
 │  │     ├─ jobs-bootstrap.ts           # регистрация Kafka-консьюмеров, старт обработки
 │  │     │
 │  │     ├─ analytics-events/           # обработка аналитических событий из Kafka
+│  │     │  ├─ analytics-events.metrics.ts # реализация prometheus для метрик
 │  │     │  ├─ analytics-events.consumer.ts # подписка на tma.events.analytics
 │  │     │  ├─ analytics-events.handler.ts   # доменная логика сохранения/агрегаций
 │  │     │  └─ analytics-events.mapper.ts    # преобразование event → модель ClickHouse/PG
 │  │     │
 │  │     ├─ player-events/              # (опционально) обработка событий по игрокам
+│  │     │  ├─ player-events.metrics.ts # реализация prometheus для метрик
 │  │     │  ├─ player-events.consumer.ts# подписка на tma.events.player.*
 │  │     │  ├─ player-events.handler.ts # логика реакций на события игрока
 │  │     │  └─ player-events.mapper.ts  # маппинг событий в модели хранения
@@ -362,21 +364,9 @@
 │  │     │  ├─ kafka.module.ts          # конфигурация Kafka-консьюмеров
 │  │     │  └─ kafka-topics.ts          # константы Kafka-топиков для воркера
 │  │     │
-│  │     ├─ clickhouse/                 # клиент ClickHouse
-│  │     │  ├─ clickhouse.module.ts     # регистрация клиента ClickHouse
-│  │     │  └─ clickhouse.client.ts     # wrapper над драйвером ClickHouse, batch insert
-│  │     │
-│  │     ├─ metrics/                    # метрики производительности воркера
-│  │     │  ├─ metrics.module.ts        # модуль интеграции с libs/prometheus
-│  │     │  └─ metrics.service.ts       # инкремент метрик при обработке событий
-│  │     │
-│  │     ├─ health/                     # health-check воркера
-│  │     │  ├─ health.controller.ts     # /health, если поднят HTTP-сервер
-│  │     │  └─ health.module.ts         # модуль health
-│  │     │
-│  │     └─ logging/                    # логирование в воркере
-│  │        ├─ logging.module.ts        # подключение общего логгера
-│  │        └─ logging.interceptor.ts   # интерсептор для логирования обработки
+│  │     └─ clickhouse/                 # клиент ClickHouse
+│  │        ├─ clickhouse.module.ts     # регистрация клиента ClickHouse
+│  │        └─ clickhouse.client.ts     # wrapper над драйвером ClickHouse, batch insert
 │  │
 │  └─ telegram-bot-cli/                 # CLI-утилиты для управления Telegram-ботом
 │     ├─ package.json                   # зависимости CLI, bin-скрипт
@@ -384,21 +374,28 @@
 │        ├─ index.ts                    # вход CLI, регистрация команд (commander/yargs)
 │        │
 │        ├─ commands/                   # конкретные команды CLI
-│        │  ├─ set-webhook.command.ts   # команда установки webhook URL
-│        │  ├─ delete-webhook.command.ts# команда удаления webhook
-│        │  ├─ get-webhook-info.command.ts # просмотр текущего webhook у бота
+│        │  ├─ set-webhook.command.ts       # команда установки webhook URL
+│        │  ├─ delete-webhook.command.ts    # команда удаления webhook
+│        │  ├─ get-webhook-info.command.ts  # просмотр текущего webhook у бота
 │        │  └─ send-test-message.command.ts # отправка тестового сообщения в чат
 │        │
-│        ├─ telegram-api/               # простой HTTP-клиент к Telegram Bot API
-│        │  ├─ telegram-api.client.ts   # вызовы setWebhook, getWebhookInfo, sendMessage
+│        ├─ telegram/                   # простой HTTP-клиент к Telegram Bot API
+│        │  ├─ telegram.module.ts   # вызовы setWebhook, getWebhookInfo, sendMessage
+│        │  ├─ telegram.client.ts   # вызовы setWebhook, getWebhookInfo, sendMessage
 │        │  └─ telegram-api.types.ts    # TS-типы ответов Bot API
 │        │
 │        └─ configuration/              # конфигурация CLI             
-│           └─ cli-config.ts            # дефолтные значения (например, дефолтный webhook URL)
+│           └─ config.ts                # дефолтные значения (например, дефолтный webhook URL)
 │
 └─ docs
+   ├─ agent/
+   │  ├─ AGENT_SPEC.md                     # требования к агенту 
+   │  ├─ ARCHITECTURE.md                   # описание дерево архитектуры 
+   │  └─ CODESTYLE.md                      # описание стиля кода
    ├─ architecture/
-   │  └─ mvp.md                        # текстовое описание архитектуры + mermaid-схемы
+   │  ├─ schema.md                        # описание дерево архитектуры 
+   │  └─ mermaind.md                      # mermaid-схемы   
    └─ api/
-      ├─ openapi-admin.yaml            # OpenAPI-спека для /admin/*
-      └─ openapi-runtime.yaml          # OpenAPI-спека для /runtime/*
+      ├─ openapi-admin.yaml               # OpenAPI-спека для /admin/*
+      └─ openapi-runtime.yaml             # OpenAPI-спека для /runtime/*
+```
