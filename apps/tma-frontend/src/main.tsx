@@ -20,16 +20,16 @@ import { renderHome, renderLeaderboard, renderInvite, renderProfile } from "./sc
 import { triggerHaptic, shareLink } from "./telegram";
 import { todayKey } from "./utils";
 import { initTenant, resolveConfig } from "./runtime";
-import { tenants } from "./tenants";
+import { getTenantById, tenants } from "./tenants";
 
 const app = document.getElementById("app");
 if (!app) {
   throw new Error("App container not found");
 }
 
-const tenant = initTenant();
-const config = resolveConfig(tenant);
-const activeTenantId = tenant.id;
+let tenant = initTenant();
+let config = resolveConfig(tenant);
+let activeTenantId = tenant.id;
 
 const notify = (text: string) => pushToast(text, render);
 const confetti = () => triggerConfetti(render);
@@ -45,6 +45,13 @@ const applyTheme = () => {
   root.style.setProperty("--accent-2", config.theme.accent2);
   root.style.setProperty("--bg-1", config.theme.bg1);
   root.style.setProperty("--bg-2", config.theme.bg2);
+  root.style.setProperty("--card", config.theme.card);
+  root.style.setProperty("--stroke", config.theme.stroke);
+  root.style.setProperty("--shadow", config.theme.shadow);
+  root.style.setProperty("--ink", config.theme.ink);
+  root.style.setProperty("--muted", config.theme.muted);
+  root.style.setProperty("--glow-1", config.theme.glow1);
+  root.style.setProperty("--glow-2", config.theme.glow2);
 };
 
 const openLootbox = () => {
@@ -178,9 +185,15 @@ app.addEventListener("click", (event) => {
       if (!nextTenant || nextTenant === activeTenantId) {
         return;
       }
+      activeTenantId = nextTenant;
+      tenant = getTenantById(nextTenant);
+      config = resolveConfig(tenant);
       const params = new URLSearchParams(window.location.search);
       params.set("startapp", nextTenant);
-      window.location.search = `?${params.toString()}`;
+      window.history.replaceState({}, "", `?${params.toString()}`);
+      localStorage.setItem("tma_tenant_id", nextTenant);
+      applyTheme();
+      render();
       break;
     }
     default:

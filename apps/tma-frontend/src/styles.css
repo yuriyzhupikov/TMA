@@ -11,6 +11,8 @@
   --card: rgba(255, 255, 255, 0.78);
   --stroke: rgba(29, 26, 20, 0.12);
   --shadow: 0 16px 40px rgba(27, 24, 20, 0.14);
+  --glow-1: #ffd19a;
+  --glow-2: #b9e7d8;
 }
 
 * {
@@ -41,7 +43,7 @@ body::before {
   height: 360px;
   left: -120px;
   top: 120px;
-  background: radial-gradient(circle, #ffd19a, transparent 70%);
+  background: radial-gradient(circle, var(--glow-1), transparent 70%);
 }
 
 body::after {
@@ -49,7 +51,7 @@ body::after {
   height: 420px;
   right: -160px;
   bottom: 80px;
-  background: radial-gradient(circle, #b9e7d8, transparent 70%);
+  background: radial-gradient(circle, var(--glow-2), transparent 70%);
 }
 
 #app {

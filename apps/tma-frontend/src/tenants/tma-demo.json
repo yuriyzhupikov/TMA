@@ -11,7 +11,14 @@
       "accent": "#ff7a1a",
       "accent2": "#3d7a6b",
       "bg1": "#f4f1ea",
-      "bg2": "#fef7e6"
+      "bg2": "#fef7e6",
+      "card": "rgba(255, 255, 255, 0.78)",
+      "stroke": "rgba(29, 26, 20, 0.12)",
+      "shadow": "0 16px 40px rgba(27, 24, 20, 0.14)",
+      "ink": "#1d1a14",
+      "muted": "#6f6557",
+      "glow1": "#ffd19a",
+      "glow2": "#b9e7d8"
     }
   }
 }

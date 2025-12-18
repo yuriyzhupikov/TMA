@@ -9,6 +9,10 @@ export const initTenantId = () => {
   if (startapp) {
     return startapp;
   }
+  const stored = localStorage.getItem("tma_tenant_id");
+  if (stored) {
+    return stored;
+  }
   return "tma-demo";
 };
 

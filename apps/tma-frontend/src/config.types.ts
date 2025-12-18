@@ -49,6 +49,13 @@ export type ThemeConfig = {
   accent2: string;
   bg1: string;
   bg2: string;
+  card: string;
+  stroke: string;
+  shadow: string;
+  ink: string;
+  muted: string;
+  glow1: string;
+  glow2: string;
 };
 
 export type GameConfig = {
