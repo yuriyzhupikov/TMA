@@ -17,7 +17,9 @@
       "ink": "#141b29",
       "muted": "#5e6a7e",
       "glow1": "#ffcf72",
-      "glow2": "#8fd3ff"
+      "glow2": "#8fd3ff",
+      "bgImage": "",
+      "bgOverlay": "rgba(255, 255, 255, 0.12)"
     },
     "dailyQuest": {
       "title": "Квест дня",

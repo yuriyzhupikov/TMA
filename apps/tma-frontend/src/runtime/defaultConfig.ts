@@ -25,6 +25,8 @@ export const defaultConfig: GameConfig = {
     muted: "#6f6557",
     glow1: "#ffd19a",
     glow2: "#b9e7d8",
+    bgImage: "",
+    bgOverlay: "rgba(222, 217, 166, 0.18)",
   },
   checkin: defaultCheckIn,
   dailyQuest: defaultDailyQuest,

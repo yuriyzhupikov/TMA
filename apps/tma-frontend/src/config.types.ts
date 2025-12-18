@@ -66,6 +66,8 @@ export type ThemeConfig = {
   muted: string;
   glow1: string;
   glow2: string;
+  bgImage: string;
+  bgOverlay: string;
 };
 
 export type GameConfig = {

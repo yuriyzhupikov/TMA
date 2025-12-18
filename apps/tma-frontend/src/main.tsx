@@ -54,6 +54,8 @@ const applyTheme = () => {
   root.style.setProperty("--muted", config.theme.muted);
   root.style.setProperty("--glow-1", config.theme.glow1);
   root.style.setProperty("--glow-2", config.theme.glow2);
+  root.style.setProperty("--bg-image", config.theme.bgImage ? `url(${config.theme.bgImage})` : "none");
+  root.style.setProperty("--bg-overlay", config.theme.bgOverlay);
 };
 
 const openLootbox = () => {
