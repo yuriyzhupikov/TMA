@@ -32,9 +32,6 @@ export class AuthService {
   }
 
   async me(userId: string): Promise<MeDto> {
-    if (!userId) {
-      throw new BadRequestException('userId is required');
-    }
     const user = await this.findUserById(userId);
     if (!user) {
       throw new UnauthorizedException('User not found');

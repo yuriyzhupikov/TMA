@@ -1,5 +1,12 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import {
+  BadRequestException,
+  createParamDecorator,
+  ExecutionContext,
+} from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import { validateSync } from 'class-validator';
 import { Request } from 'express';
+import { UserIdHeaderDto } from '../dto/user-id-header.dto';
 
 export interface RequestUser {
   id: string;
@@ -25,11 +32,14 @@ const getRequestWithUser = (ctx: ExecutionContext): RequestWithUser =>
 export const CurrentUserId = createParamDecorator(
   (_data: unknown, ctx: ExecutionContext): string => {
     const request = getRequestWithUser(ctx);
-    const headerUserId =
-      typeof request.headers['x-user-id'] === 'string'
-        ? (request.headers['x-user-id'] as string)
-        : undefined;
-    return request.user?.id ?? headerUserId ?? '';
+    const headersDto = plainToInstance(UserIdHeaderDto, request.headers);
+
+    const errors = validateSync(headersDto);
+    if (errors.length) {
+      throw new BadRequestException('Missing x-user-id header');
+    }
+
+    return request.user?.id ?? headersDto.userId;
   },
 );
 

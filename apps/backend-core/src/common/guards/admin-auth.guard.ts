@@ -11,10 +11,12 @@ export class AdminAuthGuard implements CanActivate {
       .switchToHttp()
       .getRequest<{ headers: Record<string, unknown>; user?: RequestUser }>();
     const headerUserId =
-      (request.headers['x-user-id'] as string | undefined) ?? 'anonymous-admin';
+      typeof request.headers['x-user-id'] === 'string'
+        ? (request.headers['x-user-id'] as string)
+        : undefined;
 
     const user: RequestUser = {
-      id: headerUserId,
+      id: headerUserId ?? '',
       email:
         (request.headers['x-user-email'] as string | undefined) ?? undefined,
       roles:
