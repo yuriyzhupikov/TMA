@@ -1,0 +1,17 @@
+{
+  "id": "tma-demo",
+  "label": "TMA Demo",
+  "overrides": {
+    "botName": "tma_demo_bot",
+    "theme": {
+      "brand": "TMA",
+      "badge": "Игровые клубы",
+      "heroTitle": "Игровые клубы TMA игры",
+      "heroSubtitle": "Демо-MVP без бэка: чек-ин, спины, сундуки и лидерборд.",
+      "accent": "#ff7a1a",
+      "accent2": "#3d7a6b",
+      "bg1": "#f4f1ea",
+      "bg2": "#fef7e6"
+    }
+  }
+}

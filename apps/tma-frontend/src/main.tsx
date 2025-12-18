@@ -1,6 +1,6 @@
 import "./styles.css";
 import "./telegram/types";
-import { BOT_NAME, STORAGE_KEY } from "./data";
+import { STORAGE_KEY } from "./data";
 import { renderBottomNav, getScreenFromButton } from "./components/layout";
 import { renderConfetti, renderToasts } from "./components/feedback";
 import { renderLootboxModal } from "./components/common";
@@ -19,11 +19,17 @@ import {
 import { renderHome, renderLeaderboard, renderInvite, renderProfile } from "./screens";
 import { triggerHaptic, shareLink } from "./telegram";
 import { todayKey } from "./utils";
+import { initTenant, resolveConfig } from "./runtime";
+import { tenants } from "./tenants";
 
 const app = document.getElementById("app");
 if (!app) {
   throw new Error("App container not found");
 }
+
+const tenant = initTenant();
+const config = resolveConfig(tenant);
+const activeTenantId = tenant.id;
 
 const notify = (text: string) => pushToast(text, render);
 const confetti = () => triggerConfetti(render);
@@ -31,6 +37,14 @@ const effects = {
   toast: notify,
   confetti,
   haptic: triggerHaptic,
+};
+
+const applyTheme = () => {
+  const root = document.documentElement;
+  root.style.setProperty("--accent", config.theme.accent);
+  root.style.setProperty("--accent-2", config.theme.accent2);
+  root.style.setProperty("--bg-1", config.theme.bg1);
+  root.style.setProperty("--bg-2", config.theme.bg2);
 };
 
 const openLootbox = () => {
@@ -41,7 +55,7 @@ const openLootbox = () => {
   ui.lootbox = {
     chestId: chest.id,
     phase: "opening",
-    reward: randomLootReward("Сундук"),
+    reward: randomLootReward(config.lootbox.rewards, "Сундук"),
   };
   triggerHaptic();
   render();
@@ -55,7 +69,7 @@ const openLootbox = () => {
 };
 
 const shareInvite = () => {
-  const link = `https://t.me/${BOT_NAME}?startapp=ref_${state.myCode}`;
+  const link = `https://t.me/${config.botName}?startapp=ref_${state.myCode}`;
   shareLink(link);
   notify("Ссылка готова к отправке");
 };
@@ -73,21 +87,21 @@ const render = () => {
   sanitizeDailyFlags();
   const screenContent =
     ui.screen === "home"
-      ? renderHome(state, ui)
+      ? renderHome(state, ui, config)
       : ui.screen === "leaderboard"
-        ? renderLeaderboard(state, ui)
+        ? renderLeaderboard(state, ui, config)
         : ui.screen === "invite"
-          ? renderInvite(state)
-          : renderProfile(state);
+          ? renderInvite(state, config)
+          : renderProfile(state, config, tenants, activeTenantId);
 
   app.innerHTML = `
     <div class="app-shell">
       <header class="topbar">
         <div>
-          <div class="brand">TMA</div>
-          <div class="badge">Игровые клубы</div>
+          <div class="brand">${config.theme.brand}</div>
+          <div class="badge">${config.theme.badge}</div>
         </div>
-        <div class="badge">MVP демо</div>
+        <div class="badge">${tenant.label}</div>
       </header>
       ${screenContent}
     </div>
@@ -116,9 +130,13 @@ app.addEventListener("click", (event) => {
   }
   switch (action) {
     case "checkin":
-      applyCheckIn(effects);
+      applyCheckIn(effects, config);
       break;
     case "spin":
+      if (!config.spin.enabled) {
+        notify("Спин недоступен");
+        return;
+      }
       if (state.spinDate === todayKey()) {
         notify("Сегодня уже крутили");
         return;
@@ -129,7 +147,7 @@ app.addEventListener("click", (event) => {
       ui.isSpinning = true;
       render();
       window.setTimeout(() => {
-        applySpin(effects);
+        applySpin(effects, config);
         ui.isSpinning = false;
         render();
       }, 1200);
@@ -155,10 +173,21 @@ app.addEventListener("click", (event) => {
     case "reset-demo":
       resetDemo();
       break;
+    case "set-tenant": {
+      const nextTenant = button.getAttribute("data-tenant");
+      if (!nextTenant || nextTenant === activeTenantId) {
+        return;
+      }
+      const params = new URLSearchParams(window.location.search);
+      params.set("startapp", nextTenant);
+      window.location.search = `?${params.toString()}`;
+      break;
+    }
     default:
       break;
   }
 });
 
 initReferral(effects);
+applyTheme();
 render();

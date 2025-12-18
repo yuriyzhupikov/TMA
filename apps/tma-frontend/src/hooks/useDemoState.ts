@@ -1,5 +1,6 @@
 import type { DemoState, Reward, Chest } from "../types";
-import { lootRewards, STORAGE_KEY } from "../data/constants";
+import type { GameConfig, RewardPreset } from "../config.types";
+import { STORAGE_KEY } from "../data/constants";
 import { todayKey, uid } from "../utils";
 
 export type Effects = {
@@ -90,27 +91,27 @@ export const createReward = (base: Omit<Reward, "id" | "source" | "at">, source:
   at: Date.now(),
 });
 
-export const randomLootReward = (source: string) =>
-  createReward(lootRewards[Math.floor(Math.random() * lootRewards.length)], source);
+export const randomLootReward = (rewards: RewardPreset[], source: string) =>
+  createReward(rewards[Math.floor(Math.random() * rewards.length)], source);
 
-export const applyCheckIn = (effects: Effects) => {
+export const applyCheckIn = (effects: Effects, config: GameConfig) => {
   const today = todayKey();
   if (state.checkInDate === today) {
     effects.toast("Уже отмечались");
     return;
   }
   state.checkInDate = today;
-  const reward = createReward({ kind: "points", value: 25, label: "+25 очков" }, "Чек-ин");
+  const reward = createReward(config.checkin.reward, "Чек-ин");
   grantReward(reward);
-  state.chests.unshift(createChest("daily"));
+  state.chests.unshift(createChest(config.checkin.chestSource));
   saveState(state);
   effects.haptic();
   effects.confetti();
   effects.toast("Чек-ин принят! Сундук добавлен.");
 };
 
-export const applySpin = (effects: Effects) => {
-  const reward = randomLootReward("Lucky Spin");
+export const applySpin = (effects: Effects, config: GameConfig) => {
+  const reward = randomLootReward(config.spin.rewards, "Lucky Spin");
   grantReward(reward);
   state.spinDate = todayKey();
   saveState(state);

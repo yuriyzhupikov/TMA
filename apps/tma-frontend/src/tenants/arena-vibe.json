@@ -1,0 +1,57 @@
+{
+  "id": "arena-vibe",
+  "label": "Arena Vibe",
+  "overrides": {
+    "theme": {
+      "brand": "ARENA",
+      "badge": "Кибер арена",
+      "heroTitle": "Arena Vibe",
+      "heroSubtitle": "Ежедневные миссии, спины и клановые сундуки.",
+      "accent": "#ffb703",
+      "accent2": "#219ebc",
+      "bg1": "#f4f7ff",
+      "bg2": "#eaf2ff"
+    },
+    "checkin": {
+      "reward": { "kind": "points", "value": 40, "label": "+40 очков" },
+      "chestSource": "arena"
+    },
+    "spin": {
+      "enabled": true,
+      "rewards": [
+        { "kind": "points", "value": 60, "label": "+60 очков" },
+        { "kind": "minutes", "value": 45, "label": "+45 минут" },
+        { "kind": "discount", "value": 15, "label": "Скидка 15%" }
+      ]
+    },
+    "lootbox": {
+      "rewards": [
+        { "kind": "points", "value": 70, "label": "+70 очков" },
+        { "kind": "minutes", "value": 60, "label": "+60 минут" },
+        { "kind": "discount", "value": 20, "label": "Скидка 20%" }
+      ]
+    },
+    "leaderboard": {
+      "title": "Арена недели",
+      "subtitle": "Лучшие игроки арены по сумме очков.",
+      "rules": [
+        "Ежедневный чек-ин: +40 очков",
+        "Спин: до +60 очков",
+        "Командные приглашения: сундук обоим",
+        "Лутбоксы: бонусы времени"
+      ],
+      "entries": [
+        { "name": "Vega", "points": 1120 },
+        { "name": "Rin", "points": 1060 },
+        { "name": "Neo", "points": 990 },
+        { "name": "Mara", "points": 940 },
+        { "name": "Bolt", "points": 905 },
+        { "name": "Echo", "points": 880 },
+        { "name": "Jett", "points": 860 },
+        { "name": "Lux", "points": 840 },
+        { "name": "Pyro", "points": 820 },
+        { "name": "Wisp", "points": 800 }
+      ]
+    }
+  }
+}

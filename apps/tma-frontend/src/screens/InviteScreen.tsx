@@ -1,12 +1,12 @@
 import type { DemoState } from "../types";
-import { BOT_NAME } from "../data/constants";
+import type { GameConfig } from "../config.types";
 
-export const renderInvite = (state: DemoState) => {
-  const link = `https://t.me/${BOT_NAME}?startapp=ref_${state.myCode}`;
+export const renderInvite = (state: DemoState, config: GameConfig) => {
+  const link = `https://t.me/${config.botName}?startapp=ref_${state.myCode}`;
   return `
     <section class="hero">
       <div class="hero-title">Пригласи друзей</div>
-      <div class="hero-sub">Друг откроет TMA по твоей ссылке — вы оба получите сундук.</div>
+      <div class="hero-sub">${config.invite.description}</div>
     </section>
 
     <section class="card">

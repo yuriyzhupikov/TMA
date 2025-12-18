@@ -1,16 +1,16 @@
 import type { DemoState, UiState } from "../types";
-import { leaderboard } from "../data/constants";
+import type { GameConfig } from "../config.types";
 
-export const renderLeaderboard = (state: DemoState, ui: UiState) => {
+export const renderLeaderboard = (state: DemoState, ui: UiState, config: GameConfig) => {
   const myRank = 14;
   return `
     <section class="hero">
-      <div class="hero-title">Лидерборд недели</div>
-      <div class="hero-sub">Топ-10 игроков по активности и выполненным заданиям.</div>
+      <div class="hero-title">${config.leaderboard.title}</div>
+      <div class="hero-sub">${config.leaderboard.subtitle}</div>
     </section>
 
     <section class="list">
-      ${leaderboard
+      ${config.leaderboard.entries
         .map(
           (entry, index) => `
           <div class="rank-row">
@@ -39,10 +39,7 @@ export const renderLeaderboard = (state: DemoState, ui: UiState) => {
       ${
         ui.rulesOpen
           ? `<div class="rules">
-              <div>• Чек-ин каждый день: +25 очков</div>
-              <div>• Lucky Spin: до +50 очков</div>
-              <div>• Приглашения друзей: сундук обоим</div>
-              <div>• Открытие сундуков: бонусы и скидки</div>
+              ${config.leaderboard.rules.map((rule) => `<div>• ${rule}</div>`).join("")}
             </div>`
           : ""
       }

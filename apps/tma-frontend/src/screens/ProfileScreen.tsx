@@ -1,9 +1,15 @@
 import type { DemoState } from "../types";
+import type { GameConfig, TenantConfig } from "../config.types";
 import { formatDateTime } from "../utils";
 
-export const renderProfile = (state: DemoState) => {
+export const renderProfile = (
+  state: DemoState,
+  config: GameConfig,
+  tenants: TenantConfig[],
+  activeTenantId: string,
+) => {
   const progress = Math.min(100, Math.round((state.balance.xp / state.balance.xpNext) * 100));
-  const history = state.history.slice(0, 10);
+  const history = state.history.slice(0, config.profile.historyLimit);
   return `
     <section class="hero">
       <div class="hero-title">Профиль игрока</div>
@@ -40,6 +46,22 @@ export const renderProfile = (state: DemoState) => {
       <p>Очистить локальный прогресс и начать заново.</p>
       <div class="card-actions">
         <button class="button ghost" data-action="reset-demo">Сброс демо</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Компания / тема</h3>
+      <p>Переключить набор настроек и стиль.</p>
+      <div class="card-actions">
+        ${tenants
+          .map(
+            (tenant) => `
+            <button class="button ghost" data-action="set-tenant" data-tenant="${tenant.id}">
+              ${tenant.id === activeTenantId ? "✓ " : ""}${tenant.label}
+            </button>
+          `,
+          )
+          .join("")}
       </div>
     </section>
   `;

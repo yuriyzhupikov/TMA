@@ -1,1 +1,1 @@
-export { BOT_NAME, STORAGE_KEY, leaderboard, lootRewards } from "./constants";
+export { STORAGE_KEY } from "./constants";

@@ -1,10 +1,12 @@
 import type { DemoState, UiState } from "../types";
+import type { GameConfig } from "../config.types";
 import { todayKey } from "../utils";
 
-export const renderHome = (state: DemoState, ui: UiState) => {
+export const renderHome = (state: DemoState, ui: UiState, config: GameConfig) => {
   const checkInDone = state.checkInDate === todayKey();
   const spinDone = state.spinDate === todayKey();
   const lootAvailable = state.chests.length > 0;
+  const spinEnabled = config.spin.enabled;
 
   const lootList = lootAvailable
     ? state.chests
@@ -18,8 +20,8 @@ export const renderHome = (state: DemoState, ui: UiState) => {
 
   return `
     <section class="hero">
-      <div class="hero-title">Игровые клубы TMA игры</div>
-      <div class="hero-sub">Демо-MVP без бэка: чек-ин, спины, сундуки и лидерборд.</div>
+      <div class="hero-title">${config.theme.heroTitle}</div>
+      <div class="hero-sub">${config.theme.heroSubtitle}</div>
       <div class="balance-mini">
         <div class="balance-chip"><strong>${state.balance.points}</strong><span>очки</span></div>
         <div class="balance-chip"><strong>${state.balance.minutes}</strong><span>минуты</span></div>
@@ -37,9 +39,11 @@ export const renderHome = (state: DemoState, ui: UiState) => {
 
     <section class="card">
       <h3>Lucky Spin</h3>
-      <p>${spinDone ? "Уже крутили" : "Доступно 1 вращение"}</p>
+      <p>${spinEnabled ? (spinDone ? "Уже крутили" : "Доступно 1 вращение") : "Скоро будет доступно"}</p>
       <div class="card-actions">
-        <button class="button secondary" data-action="spin" ${spinDone || ui.isSpinning ? "disabled" : ""}>
+        <button class="button secondary" data-action="spin" ${
+          spinDone || ui.isSpinning || !spinEnabled ? "disabled" : ""
+        }>
           ${ui.isSpinning ? "Крутим..." : "Крутить"}
         </button>
       </div>

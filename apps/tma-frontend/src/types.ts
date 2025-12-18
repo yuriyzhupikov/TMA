@@ -1,4 +1,4 @@
-export type RewardKind = "points" | "minutes" | "discount";
+import type { RewardKind } from "./config.types";
 
 export type Reward = {
   id: string;
