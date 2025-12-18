@@ -26,6 +26,11 @@ export type Balance = {
 export type DemoState = {
   balance: Balance;
   checkInDate: string | null;
+  dailyQuestDate: string | null;
+  dailyQuestStreak: number;
+  dailyQuestVariant: string | null;
+  dailyQuestVariantDate: string | null;
+  dailyQuestVariantTenant: string | null;
   spinDate: string | null;
   chests: Chest[];
   history: Reward[];
@@ -33,7 +38,7 @@ export type DemoState = {
   refAccepted: boolean;
 };
 
-export type Screen = "home" | "leaderboard" | "invite" | "profile";
+export type Screen = "home" | "daily-quest" | "leaderboard" | "invite" | "profile";
 
 export type LootboxUi = {
   chestId: string;

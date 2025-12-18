@@ -13,7 +13,7 @@ export const initTenantId = () => {
   if (stored) {
     return stored;
   }
-  return "tma-demo";
+  return "game-one";
 };
 
 export const initTenant = () => {

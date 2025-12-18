@@ -11,6 +11,16 @@ export type CheckInConfig = {
   chestSource: string;
 };
 
+export type DailyQuestConfig = {
+  title: string;
+  description: string;
+  reward: RewardPreset;
+  chestSource: string;
+  streakMilestones: number[];
+  streakReward: RewardPreset;
+  variants: string[];
+};
+
 export type SpinConfig = {
   enabled: boolean;
   rewards: RewardPreset[];
@@ -60,6 +70,7 @@ export type ThemeConfig = {
 
 export type GameConfig = {
   checkin: CheckInConfig;
+  dailyQuest: DailyQuestConfig;
   spin: SpinConfig;
   lootbox: LootboxConfig;
   leaderboard: LeaderboardConfig;

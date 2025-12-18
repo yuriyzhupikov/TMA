@@ -6,17 +6,19 @@ import { renderConfetti, renderToasts } from "./components/feedback";
 import { renderLootboxModal } from "./components/common";
 import {
   applyCheckIn,
+  applyDailyQuest,
   applySpin,
   claimLootbox,
   initReferral,
   pushToast,
+  ensureDailyQuestVariant,
   randomLootReward,
   sanitizeDailyFlags,
   state,
   triggerConfetti,
   ui,
 } from "./hooks";
-import { renderHome, renderLeaderboard, renderInvite, renderProfile } from "./screens";
+import { renderDailyQuest, renderHome, renderLeaderboard, renderInvite, renderProfile } from "./screens";
 import { triggerHaptic, shareLink } from "./telegram";
 import { todayKey } from "./utils";
 import { initTenant, resolveConfig } from "./runtime";
@@ -92,14 +94,17 @@ const resetDemo = () => {
 
 const render = () => {
   sanitizeDailyFlags();
+  const questVariant = ensureDailyQuestVariant(config, tenant.id);
   const screenContent =
     ui.screen === "home"
-      ? renderHome(state, ui, config)
-      : ui.screen === "leaderboard"
-        ? renderLeaderboard(state, ui, config)
-        : ui.screen === "invite"
-          ? renderInvite(state, config)
-          : renderProfile(state, config, tenants, activeTenantId);
+      ? renderHome(state, ui, config, questVariant)
+      : ui.screen === "daily-quest"
+        ? renderDailyQuest(state, config, questVariant)
+        : ui.screen === "leaderboard"
+          ? renderLeaderboard(state, ui, config)
+          : ui.screen === "invite"
+            ? renderInvite(state, config)
+            : renderProfile(state, config, tenants, activeTenantId);
 
   app.innerHTML = `
     <div class="app-shell">
@@ -138,6 +143,17 @@ app.addEventListener("click", (event) => {
   switch (action) {
     case "checkin":
       applyCheckIn(effects, config);
+      break;
+    case "daily-quest":
+      applyDailyQuest(effects, config);
+      break;
+    case "open-quest":
+      ui.screen = "daily-quest";
+      render();
+      break;
+    case "go-home":
+      ui.screen = "home";
+      render();
       break;
     case "spin":
       if (!config.spin.enabled) {

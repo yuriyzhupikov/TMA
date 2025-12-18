@@ -2,8 +2,14 @@ import type { DemoState, UiState } from "../types";
 import type { GameConfig } from "../config.types";
 import { todayKey } from "../utils";
 
-export const renderHome = (state: DemoState, ui: UiState, config: GameConfig) => {
+export const renderHome = (
+  state: DemoState,
+  ui: UiState,
+  config: GameConfig,
+  questVariant: string,
+) => {
   const checkInDone = state.checkInDate === todayKey();
+  const questDone = state.dailyQuestDate === todayKey();
   const spinDone = state.spinDate === todayKey();
   const lootAvailable = state.chests.length > 0;
   const spinEnabled = config.spin.enabled;
@@ -35,6 +41,18 @@ export const renderHome = (state: DemoState, ui: UiState, config: GameConfig) =>
       <div class="card-actions">
         <button class="button" data-action="checkin">Отметиться</button>
       </div>
+    </section>
+
+    <section class="card">
+      <h3>${config.dailyQuest.title}</h3>
+      <p>${questDone ? "Квест выполнен на сегодня" : config.dailyQuest.description}</p>
+      <p class="hero-sub">Сегодня: ${questVariant}</p>
+      <div class="card-actions">
+        <button class="button ghost" data-action="open-quest">
+          Подробнее
+        </button>
+      </div>
+      <div class="hero-sub">Серия: ${state.dailyQuestStreak} дней</div>
     </section>
 
     <section class="card">

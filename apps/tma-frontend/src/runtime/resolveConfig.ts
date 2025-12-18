@@ -18,6 +18,11 @@ export const resolveConfig = (tenant: TenantConfig): GameConfig => {
       ...overrides.checkin,
       reward: overrides.checkin?.reward ?? defaultConfig.checkin.reward,
     },
+    dailyQuest: {
+      ...defaultConfig.dailyQuest,
+      ...overrides.dailyQuest,
+      reward: overrides.dailyQuest?.reward ?? defaultConfig.dailyQuest.reward,
+    },
     spin: {
       ...defaultConfig.spin,
       ...overrides.spin,

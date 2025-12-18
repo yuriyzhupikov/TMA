@@ -1,5 +1,6 @@
 import type { GameConfig } from "../config.types";
 import { defaultCheckIn } from "../games/checkin/defaults";
+import { defaultDailyQuest } from "../games/daily-quest/defaults";
 import { defaultInvite } from "../games/invite/defaults";
 import { defaultLeaderboard } from "../games/leaderboard/defaults";
 import { defaultLootbox } from "../games/lootbox/defaults";
@@ -26,6 +27,7 @@ export const defaultConfig: GameConfig = {
     glow2: "#b9e7d8",
   },
   checkin: defaultCheckIn,
+  dailyQuest: defaultDailyQuest,
   spin: defaultSpin,
   lootbox: defaultLootbox,
   leaderboard: defaultLeaderboard,

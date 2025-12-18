@@ -18,6 +18,11 @@ const defaultState = (): DemoState => ({
     xpNext: 90,
   },
   checkInDate: null,
+  dailyQuestDate: null,
+  dailyQuestStreak: 0,
+  dailyQuestVariant: null,
+  dailyQuestVariantDate: null,
+  dailyQuestVariantTenant: null,
   spinDate: null,
   chests: [],
   history: [],
@@ -54,6 +59,15 @@ export const sanitizeDailyFlags = () => {
   const today = todayKey();
   if (state.spinDate && state.spinDate !== today) {
     state.spinDate = null;
+  }
+  if (state.dailyQuestDate && state.dailyQuestDate !== today) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayKey = yesterday.toISOString().slice(0, 10);
+    if (state.dailyQuestDate !== yesterdayKey) {
+      state.dailyQuestStreak = 0;
+    }
+    state.dailyQuestDate = null;
   }
 };
 
@@ -117,6 +131,49 @@ export const applySpin = (effects: Effects, config: GameConfig) => {
   saveState(state);
   effects.haptic();
   effects.toast(`Выпало: ${reward.label}`);
+};
+
+export const applyDailyQuest = (effects: Effects, config: GameConfig) => {
+  const today = todayKey();
+  if (state.dailyQuestDate === today) {
+    effects.toast("Квест дня уже выполнен");
+    return;
+  }
+  state.dailyQuestDate = today;
+  state.dailyQuestStreak += 1;
+  const reward = createReward(config.dailyQuest.reward, config.dailyQuest.title);
+  grantReward(reward);
+  state.chests.unshift(createChest(config.dailyQuest.chestSource));
+
+  if (config.dailyQuest.streakMilestones.includes(state.dailyQuestStreak)) {
+    const streakReward = createReward(config.dailyQuest.streakReward, "Серия квестов");
+    grantReward(streakReward);
+    effects.toast(`Бонус за серию: ${streakReward.label}`);
+  }
+  saveState(state);
+  effects.haptic();
+  effects.toast("Квест выполнен! Сундук добавлен.");
+};
+
+export const ensureDailyQuestVariant = (config: GameConfig, tenantId: string) => {
+  const today = todayKey();
+  const variants = config.dailyQuest.variants;
+  if (!variants || variants.length === 0) {
+    return config.dailyQuest.description;
+  }
+  if (
+    state.dailyQuestVariant &&
+    state.dailyQuestVariantDate === today &&
+    state.dailyQuestVariantTenant === tenantId
+  ) {
+    return state.dailyQuestVariant;
+  }
+  const picked = variants[Math.floor(Math.random() * variants.length)];
+  state.dailyQuestVariant = picked;
+  state.dailyQuestVariantDate = today;
+  state.dailyQuestVariantTenant = tenantId;
+  saveState(state);
+  return picked;
 };
 
 export const claimLootbox = (chestId: string, reward: Reward, effects: Effects) => {
