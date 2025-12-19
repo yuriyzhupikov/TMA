@@ -1,11 +1,15 @@
 import type { GameConfig } from "../config.types";
 import { defaultCheckIn } from "../games/checkin/defaults";
+import { defaultCollection } from "../games/collection/defaults";
 import { defaultDailyQuest } from "../games/daily-quest/defaults";
 import { defaultInvite } from "../games/invite/defaults";
 import { defaultLeaderboard } from "../games/leaderboard/defaults";
 import { defaultLootbox } from "../games/lootbox/defaults";
+import { defaultPass } from "../games/pass/defaults";
 import { defaultProfile } from "../games/profile/defaults";
+import { defaultQuiz } from "../games/quiz/defaults";
 import { defaultSpin } from "../games/spin/defaults";
+import { defaultReceipt } from "../games/receipt/defaults";
 
 export const defaultConfig: GameConfig = {
   botName: "tma_demo_bot",
@@ -35,4 +39,14 @@ export const defaultConfig: GameConfig = {
   leaderboard: defaultLeaderboard,
   invite: defaultInvite,
   profile: defaultProfile,
+  collection: defaultCollection,
+  quiz: defaultQuiz,
+  receipt: defaultReceipt,
+  pass: defaultPass,
+  features: {
+    collection: false,
+    quiz: false,
+    receipt: false,
+    pass: false,
+  },
 };

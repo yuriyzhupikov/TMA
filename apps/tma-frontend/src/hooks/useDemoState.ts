@@ -9,7 +9,7 @@ export type Effects = {
   haptic: () => void;
 };
 
-const defaultState = (): DemoState => ({
+const defaultState = (tenantId = ""): DemoState => ({
   balance: {
     points: 120,
     minutes: 45,
@@ -17,6 +17,7 @@ const defaultState = (): DemoState => ({
     xp: 40,
     xpNext: 90,
   },
+  tenantId,
   checkInDate: null,
   dailyQuestDate: null,
   dailyQuestStreak: 0,
@@ -24,6 +25,9 @@ const defaultState = (): DemoState => ({
   dailyQuestVariantDate: null,
   dailyQuestVariantTenant: null,
   spinDate: null,
+  quizDate: null,
+  receiptDate: null,
+  collectionItems: [],
   chests: [],
   history: [],
   myCode: uid(),
@@ -53,7 +57,15 @@ export const saveState = (state: DemoState) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 };
 
-export const state = loadState();
+export let state = loadState();
+
+export const ensureTenantState = (tenantId: string) => {
+  if (state.tenantId === tenantId) {
+    return;
+  }
+  state = defaultState(tenantId);
+  saveState(state);
+};
 
 export const sanitizeDailyFlags = () => {
   const today = todayKey();
@@ -68,6 +80,12 @@ export const sanitizeDailyFlags = () => {
       state.dailyQuestStreak = 0;
     }
     state.dailyQuestDate = null;
+  }
+  if (state.quizDate && state.quizDate !== today) {
+    state.quizDate = null;
+  }
+  if (state.receiptDate && state.receiptDate !== today) {
+    state.receiptDate = null;
   }
 };
 
@@ -174,6 +192,69 @@ export const ensureDailyQuestVariant = (config: GameConfig, tenantId: string) =>
   state.dailyQuestVariantTenant = tenantId;
   saveState(state);
   return picked;
+};
+
+export const collectItem = (config: GameConfig, effects: Effects) => {
+  const remaining = config.collection.items.filter((item) => !state.collectionItems.includes(item));
+  if (remaining.length === 0) {
+    effects.toast("Все карточки уже собраны");
+    return;
+  }
+  const picked = remaining[Math.floor(Math.random() * remaining.length)];
+  state.collectionItems.push(picked);
+  grantReward(createReward({ kind: "points", value: 20, label: "+20 бонусов" }, "Коллекция"));
+
+  config.collection.sets.forEach((set) => {
+    const complete = set.items.every((item) => state.collectionItems.includes(item));
+    if (complete) {
+      grantReward(createReward(set.reward, `Набор: ${set.name}`));
+      state.chests.unshift(createChest(config.collection.chestSource));
+      effects.toast(`Собран набор: ${set.name}`);
+    }
+  });
+  saveState(state);
+  effects.haptic();
+  effects.toast(`Добавлено: ${picked}`);
+};
+
+export const applyQuiz = (effects: Effects, config: GameConfig) => {
+  const today = todayKey();
+  if (state.quizDate === today) {
+    effects.toast("Квиз уже пройден сегодня");
+    return;
+  }
+  state.quizDate = today;
+  const success = Math.random() > 0.25;
+  const reward = createReward(
+    success ? config.quiz.rewardPass : config.quiz.rewardFail,
+    success ? "Викторина" : "Попытка викторины",
+  );
+  grantReward(reward);
+  if (success) {
+    state.chests.unshift(createChest("quiz"));
+  }
+  saveState(state);
+  effects.haptic();
+  effects.toast(success ? "Квиз пройден!" : "Попробуйте завтра");
+};
+
+export const applyReceipt = (effects: Effects, config: GameConfig) => {
+  const today = todayKey();
+  if (state.receiptDate === today) {
+    effects.toast("Сегодня уже проверяли чек");
+    return;
+  }
+  state.receiptDate = today;
+  const win = Math.random() < config.receipt.winChance;
+  if (win) {
+    const reward = createReward(config.receipt.reward, "Счастливый чек");
+    grantReward(reward);
+    state.chests.unshift(createChest(config.receipt.chestSource));
+    effects.toast("Чек счастливый! Приз добавлен");
+  } else {
+    effects.toast("Сегодня без выигрыша");
+  }
+  saveState(state);
 };
 
 export const claimLootbox = (chestId: string, reward: Reward, effects: Effects) => {

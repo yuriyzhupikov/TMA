@@ -20,7 +20,13 @@
       "glow1": "#ffd19a",
       "glow2": "#b9e7d8",
       "bgImage": "/cs2.jpg",
-      "bgOverlay": "rgba(255, 255, 255, 0.8)"
+      "bgOverlay": "rgba(255, 255, 255, 0.2)"
+    },
+    "features": {
+      "collection": false,
+      "quiz": false,
+      "receipt": false,
+      "pass": false
     },
     "dailyQuest": {
       "title": "Квест дня",

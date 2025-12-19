@@ -13,6 +13,9 @@ export const renderHome = (
   const spinDone = state.spinDate === todayKey();
   const lootAvailable = state.chests.length > 0;
   const spinEnabled = config.spin.enabled;
+  const collectionProgress = Math.round(
+    (state.collectionItems.length / config.collection.items.length) * 100,
+  );
 
   const lootList = lootAvailable
     ? state.chests
@@ -77,5 +80,54 @@ export const renderHome = (
         </button>
       </div>
     </section>
+
+    ${
+      config.features.collection
+        ? `<section class="card">
+            <h3>Собери морскую корзину</h3>
+            <p>Собрано карточек: ${state.collectionItems.length}/${config.collection.items.length}</p>
+            <div class="progress"><span style="width:${collectionProgress}%"></span></div>
+            <div class="card-actions">
+              <button class="button ghost" data-action="collect-item">
+                Добавить карточку
+              </button>
+            </div>
+          </section>`
+        : ""
+    }
+
+    ${
+      config.features.quiz
+        ? `<section class="card">
+            <h3>Морская викторина</h3>
+            <p>${
+              state.quizDate === todayKey()
+                ? "Уже сыграли сегодня"
+                : "Ответьте на 3 вопроса за 45 секунд"
+            }</p>
+            <div class="card-actions">
+              <button class="button ghost" data-action="quiz">
+                Начать викторину
+              </button>
+            </div>
+          </section>`
+        : ""
+    }
+
+    ${
+      config.features.receipt
+        ? `<section class="card">
+            <h3>Счастливый чек</h3>
+            <p>${
+              state.receiptDate === todayKey() ? "Проверили чек сегодня" : "Введи сумму или отсканируй QR"
+            }</p>
+            <div class="card-actions">
+              <button class="button ghost" data-action="receipt">
+                Проверить чек
+              </button>
+            </div>
+          </section>`
+        : ""
+    }
   `;
 };

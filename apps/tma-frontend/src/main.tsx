@@ -7,11 +7,15 @@ import { renderLootboxModal } from "./components/common";
 import {
   applyCheckIn,
   applyDailyQuest,
+  applyQuiz,
+  applyReceipt,
   applySpin,
+  collectItem,
   claimLootbox,
   initReferral,
   pushToast,
   ensureDailyQuestVariant,
+  ensureTenantState,
   randomLootReward,
   sanitizeDailyFlags,
   state,
@@ -32,6 +36,7 @@ if (!app) {
 let tenant = initTenant();
 let config = resolveConfig(tenant);
 let activeTenantId = tenant.id;
+ensureTenantState(activeTenantId);
 
 const notify = (text: string) => pushToast(text, render);
 const confetti = () => triggerConfetti(render);
@@ -149,6 +154,24 @@ app.addEventListener("click", (event) => {
     case "daily-quest":
       applyDailyQuest(effects, config);
       break;
+    case "collect-item":
+      if (config.features.collection) {
+        collectItem(config, effects);
+        render();
+      }
+      break;
+    case "quiz":
+      if (config.features.quiz) {
+        applyQuiz(effects, config);
+        render();
+      }
+      break;
+    case "receipt":
+      if (config.features.receipt) {
+        applyReceipt(effects, config);
+        render();
+      }
+      break;
     case "open-quest":
       ui.screen = "daily-quest";
       render();
@@ -206,6 +229,7 @@ app.addEventListener("click", (event) => {
       activeTenantId = nextTenant;
       tenant = getTenantById(nextTenant);
       config = resolveConfig(tenant);
+      ensureTenantState(nextTenant);
       const params = new URLSearchParams(window.location.search);
       params.set("startapp", nextTenant);
       window.history.replaceState({}, "", `?${params.toString()}`);

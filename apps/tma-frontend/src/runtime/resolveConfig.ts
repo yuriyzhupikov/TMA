@@ -47,5 +47,27 @@ export const resolveConfig = (tenant: TenantConfig): GameConfig => {
       ...defaultConfig.profile,
       ...overrides.profile,
     },
+    collection: {
+      ...defaultConfig.collection,
+      ...overrides.collection,
+      items: mergeArray(defaultConfig.collection.items, overrides.collection?.items),
+      sets: mergeArray(defaultConfig.collection.sets, overrides.collection?.sets),
+    },
+    quiz: {
+      ...defaultConfig.quiz,
+      ...overrides.quiz,
+    },
+    receipt: {
+      ...defaultConfig.receipt,
+      ...overrides.receipt,
+    },
+    pass: {
+      ...defaultConfig.pass,
+      ...overrides.pass,
+    },
+    features: {
+      ...defaultConfig.features,
+      ...overrides.features,
+    },
   };
 };

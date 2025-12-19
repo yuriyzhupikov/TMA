@@ -20,6 +20,7 @@ export const renderDailyQuest = (state: DemoState, config: GameConfig, questVari
     <section class="card">
       <h3>Награда</h3>
       <p>${config.dailyQuest.reward.label} и сундук</p>
+      <p class="hero-sub">Задание: ${questVariant}</p>
       <div class="card-actions">
         <button class="button" data-action="daily-quest" ${done ? "disabled" : ""}>
           ${done ? "Уже выполнен" : "Выполнить"}

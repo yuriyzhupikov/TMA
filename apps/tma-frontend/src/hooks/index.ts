@@ -8,9 +8,13 @@ export {
   randomLootReward,
   applyCheckIn,
   applyDailyQuest,
+  collectItem,
+  applyQuiz,
+  applyReceipt,
   applySpin,
   claimLootbox,
   initReferral,
   ensureDailyQuestVariant,
+  ensureTenantState,
 } from "./useDemoState";
 export { ui, pushToast, triggerConfetti } from "./useUiState";

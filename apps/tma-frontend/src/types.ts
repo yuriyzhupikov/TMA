@@ -25,6 +25,7 @@ export type Balance = {
 
 export type DemoState = {
   balance: Balance;
+  tenantId: string;
   checkInDate: string | null;
   dailyQuestDate: string | null;
   dailyQuestStreak: number;
@@ -32,6 +33,9 @@ export type DemoState = {
   dailyQuestVariantDate: string | null;
   dailyQuestVariantTenant: string | null;
   spinDate: string | null;
+  quizDate: string | null;
+  receiptDate: string | null;
+  collectionItems: string[];
   chests: Chest[];
   history: Reward[];
   myCode: string;

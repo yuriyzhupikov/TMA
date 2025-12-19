@@ -50,6 +50,43 @@ export type ProfileConfig = {
   historyLimit: number;
 };
 
+export type CollectionSet = {
+  name: string;
+  items: string[];
+  reward: RewardPreset;
+};
+
+export type CollectionConfig = {
+  items: string[];
+  sets: CollectionSet[];
+  chestSource: string;
+};
+
+export type QuizConfig = {
+  rewardPass: RewardPreset;
+  rewardFail: RewardPreset;
+  questions: number;
+  timerSeconds: number;
+};
+
+export type ReceiptConfig = {
+  winChance: number;
+  reward: RewardPreset;
+  chestSource: string;
+};
+
+export type PassConfig = {
+  ranks: string[];
+  xpPerAction: number;
+};
+
+export type FeatureToggles = {
+  collection: boolean;
+  quiz: boolean;
+  receipt: boolean;
+  pass: boolean;
+};
+
 export type ThemeConfig = {
   brand: string;
   badge: string;
@@ -78,7 +115,12 @@ export type GameConfig = {
   leaderboard: LeaderboardConfig;
   invite: InviteConfig;
   profile: ProfileConfig;
+  collection: CollectionConfig;
+  quiz: QuizConfig;
+  receipt: ReceiptConfig;
+  pass: PassConfig;
   theme: ThemeConfig;
+  features: FeatureToggles;
   botName: string;
 };
 
