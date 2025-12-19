@@ -1,2 +1,15 @@
-// Placeholder for apps/backend-core/src/runtime/api/dto/runtime-init.dto.ts
-export {};
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+
+export class RuntimeInitDto {
+  @IsString()
+  @IsNotEmpty()
+  projectSlug!: string;
+
+  @IsString()
+  @IsOptional()
+  telegramId?: string;
+
+  @IsString()
+  @IsOptional()
+  initData?: string;
+}

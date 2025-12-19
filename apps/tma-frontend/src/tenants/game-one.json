@@ -1,0 +1,51 @@
+{
+  "id": "game-one",
+  "label": "Game-one",
+  "overrides": {
+    "botName": "game_one_bot",
+    "theme": {
+      "brand": "Game-one",
+      "badge": "Игровой клуб",
+      "heroTitle": "Game-one: игровые клубы",
+      "heroSubtitle": "Демо-MVP: чек-ин, спины, сундуки и лидерборд.",
+      "accent": "#ff7a1a",
+      "accent2": "#3d7a6b",
+      "bg1": "#f4f1ea",
+      "bg2": "#fef7e6",
+      "card": "rgba(255, 255, 255, 0.78)",
+      "stroke": "rgba(29, 26, 20, 0.12)",
+      "shadow": "0 16px 40px rgba(27, 24, 20, 0.14)",
+      "ink": "#1d1a14",
+      "muted": "#6f6557",
+      "glow1": "#ffd19a",
+      "glow2": "#b9e7d8",
+      "bgImage": "/cs2.jpg",
+      "bgOverlay": "rgba(255, 255, 255, 0.2)"
+    },
+    "features": {
+      "collection": false,
+      "quiz": false,
+      "receipt": false,
+      "pass": false
+    },
+    "dailyQuest": {
+      "title": "Квест дня",
+      "description": "Пройди 1 раунд и забери бонус.",
+      "reward": { "kind": "points", "value": 35, "label": "+35 очков" },
+      "chestSource": "quest",
+      "streakMilestones": [3, 7, 14],
+      "streakReward": { "kind": "points", "value": 80, "label": "+80 очков" },
+      "variants": [
+        "Сыграть 1 матч в выбранной игре",
+        "Провести 30 минут в клубе",
+        "Пройти 1 уровень в игре дня",
+        "Набрать 50 очков за сессию",
+        "Сделать 3 победы подряд",
+        "Попробовать игру дня",
+        "Пригласить друга и зайти вместе",
+        "Посетить клуб в тихий час",
+        "Выполнить мини-челлендж: 10 точных попаданий"
+      ]
+    }
+  }
+}

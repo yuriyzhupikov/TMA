@@ -1,2 +1,8 @@
-// Placeholder for apps/backend-core/src/runtime/game/game.module.ts
-export {};
+import { Module } from '@nestjs/common';
+import { GameService } from './game.service';
+
+@Module({
+  providers: [GameService],
+  exports: [GameService],
+})
+export class GameModule {}

@@ -1,2 +1,9 @@
-// Placeholder for apps/backend-core/src/admin/auth/dto/me.dto.ts
-export {};
+export interface MeDto {
+  id: string;
+  email: string;
+  companies: Array<{
+    id: string;
+    slug: string;
+    role: 'owner' | 'member';
+  }>;
+}

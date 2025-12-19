@@ -7,6 +7,10 @@
 /package-lock.json
 /yarn.lock
 
+# docs
+/docs/agent
+/AI_INSTRUCTIONS.md
+
 # Logs
 logs
 *.log

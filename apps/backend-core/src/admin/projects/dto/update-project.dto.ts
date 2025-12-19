@@ -1,2 +1,12 @@
-// Placeholder for apps/backend-core/src/admin/projects/dto/update-project.dto.ts
-export {};
+import { IsIn, IsOptional, IsString } from 'class-validator';
+
+export class UpdateProjectDto {
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @IsString()
+  @IsIn(['draft', 'active', 'paused'])
+  @IsOptional()
+  status?: 'draft' | 'active' | 'paused';
+}

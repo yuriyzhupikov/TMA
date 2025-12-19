@@ -1,0 +1,91 @@
+{
+  "id": "arena-vibe",
+  "label": "Arena Vibe",
+  "overrides": {
+    "theme": {
+      "brand": "ARENA",
+      "badge": "Кибер арена",
+      "heroTitle": "Arena Vibe",
+      "heroSubtitle": "Ежедневные миссии, спины и клановые сундуки.",
+      "accent": "#ffb703",
+      "accent2": "#219ebc",
+      "bg1": "#f4f7ff",
+      "bg2": "#eaf2ff",
+      "card": "rgba(255, 255, 255, 0.82)",
+      "stroke": "rgba(15, 35, 74, 0.16)",
+      "shadow": "0 16px 40px rgba(15, 35, 74, 0.18)",
+      "ink": "#141b29",
+      "muted": "#5e6a7e",
+      "glow1": "#ffcf72",
+      "glow2": "#8fd3ff",
+      "bgImage": "",
+      "bgOverlay": "rgba(255, 255, 255, 0.12)"
+    },
+    "features": {
+      "collection": false,
+      "quiz": false,
+      "receipt": false,
+      "pass": false
+    },
+    "dailyQuest": {
+      "title": "Квест дня",
+      "description": "Проведи 20 минут в зале и получи бонус.",
+      "reward": { "kind": "minutes", "value": 20, "label": "+20 минут" },
+      "chestSource": "arena-quest",
+      "streakMilestones": [5, 10],
+      "streakReward": { "kind": "points", "value": 120, "label": "+120 очков" },
+      "variants": [
+        "Сыграть 1 матч в выбранной игре",
+        "Провести 30 минут в клубе",
+        "Пройти 1 уровень в игре дня",
+        "Набрать 50 очков за сессию",
+        "Сделать 3 победы подряд",
+        "Попробовать игру дня",
+        "Пригласить друга и зайти вместе",
+        "Посетить клуб в тихий час",
+        "Выполнить мини-челлендж: 10 точных попаданий"
+      ]
+    },
+    "checkin": {
+      "reward": { "kind": "points", "value": 40, "label": "+40 очков" },
+      "chestSource": "arena"
+    },
+    "spin": {
+      "enabled": true,
+      "rewards": [
+        { "kind": "points", "value": 60, "label": "+60 очков" },
+        { "kind": "minutes", "value": 45, "label": "+45 минут" },
+        { "kind": "discount", "value": 15, "label": "Скидка 15%" }
+      ]
+    },
+    "lootbox": {
+      "rewards": [
+        { "kind": "points", "value": 70, "label": "+70 очков" },
+        { "kind": "minutes", "value": 60, "label": "+60 минут" },
+        { "kind": "discount", "value": 20, "label": "Скидка 20%" }
+      ]
+    },
+    "leaderboard": {
+      "title": "Арена недели",
+      "subtitle": "Лучшие игроки арены по сумме очков.",
+      "rules": [
+        "Ежедневный чек-ин: +40 очков",
+        "Спин: до +60 очков",
+        "Командные приглашения: сундук обоим",
+        "Лутбоксы: бонусы времени"
+      ],
+      "entries": [
+        { "name": "Vega", "points": 1120 },
+        { "name": "Rin", "points": 1060 },
+        { "name": "Neo", "points": 990 },
+        { "name": "Mara", "points": 940 },
+        { "name": "Bolt", "points": 905 },
+        { "name": "Echo", "points": 880 },
+        { "name": "Jett", "points": 860 },
+        { "name": "Lux", "points": 840 },
+        { "name": "Pyro", "points": 820 },
+        { "name": "Wisp", "points": 800 }
+      ]
+    }
+  }
+}

@@ -1,2 +1,11 @@
-// Placeholder for apps/backend-core/src/admin/configs/dto/publish-config.dto.ts
-export {};
+import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
+
+export class PublishConfigDto {
+  @IsString()
+  @IsNotEmpty()
+  projectId!: string;
+
+  @IsInt()
+  @Min(1)
+  version!: number;
+}

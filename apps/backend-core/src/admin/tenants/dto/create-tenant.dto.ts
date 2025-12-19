@@ -1,2 +1,11 @@
-// Placeholder for apps/backend-core/src/admin/tenants/dto/create-tenant.dto.ts
-export {};
+import { IsNotEmpty, IsString } from 'class-validator';
+
+export class CreateTenantDto {
+  @IsString()
+  @IsNotEmpty()
+  slug!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  name!: string;
+}

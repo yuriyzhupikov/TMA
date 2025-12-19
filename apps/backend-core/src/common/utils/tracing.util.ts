@@ -1,2 +1,14 @@
-// Placeholder for apps/backend-core/src/common/utils/tracing.util.ts
-export {};
+export interface TraceContext {
+  requestId?: string;
+  userId?: string;
+}
+
+export function buildTraceContext(
+  requestId?: string,
+  userId?: string,
+): TraceContext {
+  return {
+    ...(requestId ? { requestId } : {}),
+    ...(userId ? { userId } : {}),
+  };
+}

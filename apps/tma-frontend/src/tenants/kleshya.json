@@ -1,0 +1,95 @@
+{
+  "id": "kleshya",
+  "label": "Клешня",
+  "overrides": {
+    "botName": "kleshya_bot",
+    "theme": {
+      "brand": "Клешня",
+      "badge": "Морепродукты",
+      "heroTitle": "Клешня: ежедневный улов",
+      "heroSubtitle": "Чек-ин, колесо моряка, коллекции и уровни лояльности.",
+      "accent": "#ff6f3c",
+      "accent2": "#1f6f7a",
+      "bg1": "#f2f7fb",
+      "bg2": "#e9f4ff",
+      "card": "rgba(255, 255, 255, 0.82)",
+      "stroke": "rgba(25, 60, 90, 0.16)",
+      "shadow": "0 16px 40px rgba(20, 60, 90, 0.16)",
+      "ink": "#11222e",
+      "muted": "#5a6b7a",
+      "glow1": "#b8e8ff",
+      "glow2": "#ffcfaa",
+      "bgImage": "",
+      "bgOverlay": "rgba(255, 255, 255, 0.22)"
+    },
+    "features": {
+      "collection": true,
+      "quiz": true,
+      "receipt": true,
+      "pass": true
+    },
+    "checkin": {
+      "reward": { "kind": "points", "value": 10, "label": "+10 бонусов" },
+      "chestSource": "daily-catch"
+    },
+    "dailyQuest": {
+      "title": "Ежедневный улов",
+      "description": "Забрось сеть — получи бонус.",
+      "reward": { "kind": "points", "value": 20, "label": "+20 бонусов" },
+      "chestSource": "catch-quest",
+      "streakMilestones": [3, 7, 14],
+      "streakReward": { "kind": "discount", "value": 5, "label": "-5% на креветки" },
+      "variants": [
+        "Забросить сеть и собрать улов",
+        "Сделать чек-ин в магазине",
+        "Ответить на 3 вопроса викторины",
+        "Посмотреть советы по хранению рыбы",
+        "Поделиться акцией с другом"
+      ]
+    },
+    "spin": {
+      "enabled": true,
+      "rewards": [
+        { "kind": "discount", "value": 5, "label": "-5% на креветки" },
+        { "kind": "discount", "value": 7, "label": "-7% на лосось" },
+        { "kind": "points", "value": 30, "label": "+30 бонусов" },
+        { "kind": "points", "value": 50, "label": "+50 бонусов" }
+      ]
+    },
+    "lootbox": {
+      "rewards": [
+        { "kind": "points", "value": 60, "label": "+60 бонусов" },
+        { "kind": "discount", "value": 10, "label": "-10% на набор" },
+        { "kind": "points", "value": 80, "label": "Золотой улов" }
+      ]
+    },
+    "leaderboard": {
+      "title": "Топ покупатели недели",
+      "subtitle": "Активность, покупки и задания.",
+      "rules": [
+        "Чек-ин и улов каждый день",
+        "Колесо моряка — 1 спин в день",
+        "Собери корзину: наборы морепродуктов",
+        "Викторина: 3 вопроса за 30 секунд"
+      ],
+      "entries": [
+        { "name": "Анна \"Лосось\"", "points": 1240 },
+        { "name": "Сергей \"Краб\"", "points": 1180 },
+        { "name": "Марина \"Икра\"", "points": 1100 },
+        { "name": "Дима \"Осьминог\"", "points": 1040 },
+        { "name": "Оля \"Скумбрия\"", "points": 990 },
+        { "name": "Иван \"Судак\"", "points": 960 },
+        { "name": "Катя \"Тунец\"", "points": 940 },
+        { "name": "Рома \"Треска\"", "points": 910 },
+        { "name": "Лена \"Кальмар\"", "points": 880 },
+        { "name": "Никита \"Щука\"", "points": 860 }
+      ]
+    },
+    "invite": {
+      "description": "Приведи друга за уловом — бонусы и сундук обоим."
+    },
+    "profile": {
+      "historyLimit": 10
+    }
+  }
+}

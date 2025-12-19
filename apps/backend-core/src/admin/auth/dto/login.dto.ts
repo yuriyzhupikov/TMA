@@ -1,2 +1,11 @@
-// Placeholder for apps/backend-core/src/admin/auth/dto/login.dto.ts
-export {};
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+
+export class LoginDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password!: string;
+}

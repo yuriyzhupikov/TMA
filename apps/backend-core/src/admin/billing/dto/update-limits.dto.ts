@@ -1,2 +1,11 @@
-// Placeholder for apps/backend-core/src/admin/billing/dto/update-limits.dto.ts
-export {};
+import { IsInt, IsNotEmpty, IsPositive, IsString } from 'class-validator';
+
+export class UpdateLimitsDto {
+  @IsString()
+  @IsNotEmpty()
+  projectId!: string;
+
+  @IsInt()
+  @IsPositive()
+  monthlyLimit!: number;
+}

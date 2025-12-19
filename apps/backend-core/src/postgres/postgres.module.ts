@@ -1,10 +1,12 @@
 import { Global, Inject, Module, OnModuleDestroy } from '@nestjs/common';
-import { ConfigModule, ConfigType } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { Kysely, PostgresDialect } from 'kysely';
-import { Pool } from 'pg';
+import { Pool, PoolConfig } from 'pg';
 import { DatabaseSchema } from './database.types';
 import { PG_CLIENT } from '../configuretion/constants';
-import { pgConfig } from '../configuretion/config';
+import { PgConfigValues, pgConfig } from '../configuretion/config';
+import { MigrationRunner } from './migrations/migration-runner.service';
+import '../types/pg.types';
 
 @Global()
 @Module({
@@ -13,15 +15,31 @@ import { pgConfig } from '../configuretion/config';
     {
       provide: PG_CLIENT,
       inject: [pgConfig.KEY],
-      useFactory: (pgConfig_: ConfigType<typeof pgConfig>) =>
-        new Kysely<DatabaseSchema>({
-          dialect: new PostgresDialect({
-            pool: new Pool({
-              ...pgConfig_,
-            }),
-          }),
-        }),
+      useFactory: (pgConfig_: PgConfigValues): Kysely<DatabaseSchema> => {
+        const poolConfig: PoolConfig = {
+          host: String(pgConfig_.host),
+          port: Number(pgConfig_.port),
+          user: String(pgConfig_.user),
+          password:
+            pgConfig_.password !== undefined
+              ? String(pgConfig_.password)
+              : undefined,
+          database: String(pgConfig_.database),
+          max: Number(pgConfig_.max),
+        };
+
+        // pg typings are provided via local declaration; constructor itself is untyped.
+
+        const pool: Pool = new Pool(poolConfig);
+
+        const dialect: PostgresDialect = new PostgresDialect({ pool });
+
+        return new Kysely<DatabaseSchema>({
+          dialect,
+        });
+      },
     },
+    MigrationRunner,
   ],
   exports: [PG_CLIENT],
 })
